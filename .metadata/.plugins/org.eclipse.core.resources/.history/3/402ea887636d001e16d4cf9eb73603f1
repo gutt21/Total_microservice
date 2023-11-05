@@ -1,0 +1,58 @@
+
+
+
+package Com.Searchbox.util;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+
+public class Clientcode {
+
+	
+	
+	
+	
+	
+	public static void main(String[] args) {
+		
+		Akash book1 = new Akash("Hibernate","with building projects");
+		Transaction transaction = null;
+		try (Session session = HibernateUtil.getsessionFactory().openSession()) {
+			// start a transaction
+			transaction = session.beginTransaction();
+			Akash book = new Akash();
+			book.setName("Akash");
+			book.setLast("guttedar");
+			//session.save(book1);
+			// save the book objects
+			//session.per
+			session.persist(book);
+			
+			//session.persist(book1);
+			// commit transaction
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+
+		try (Session session = HibernateUtil.getsessionFactory().openSession()) {
+			List<Akash> books = session.createQuery("from Akash A where like A.name='java'", Akash.class).list();
+			books.forEach(b -> {
+				System.out.println("Print book name : " + b.getName());
+			});
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
+	}
+}

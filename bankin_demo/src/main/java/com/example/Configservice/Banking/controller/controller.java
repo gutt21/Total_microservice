@@ -1,0 +1,44 @@
+package com.example.Configservice.Banking.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.Configservice.Banking.model.Banking;
+import com.example.Configservice.Banking.service.Servicebanking;
+
+@RestController
+@RequestMapping("/Banking")
+public class controller {
+
+	
+	
+	@Autowired
+	private Servicebanking servicebanking;
+	
+	@PostMapping("/creat")
+	public ResponseEntity<Banking> creted(@RequestBody Banking bank){
+		Banking save = servicebanking.save(bank);
+		return ResponseEntity.ok(save);
+		
+	}
+	
+	
+	
+	@DeleteMapping("/delete/{id}")
+	public String delted(@PathVariable("id") Integer bankingid){
+		//int parseInt = Integer.parseInt(bankingid);
+		System.out.println("deltetete");
+		servicebanking.deleted(bankingid);
+		return "delted";
+	}
+	
+	
+	
+	
+}

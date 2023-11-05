@@ -1,0 +1,20 @@
+
+
+
+package Com.Searchbox.util;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+
+public class Clientcode {
+	
+	public static void main(String[] args) {
+		
+		
+		
+		
+			}
+}

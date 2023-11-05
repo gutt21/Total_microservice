@@ -1,0 +1,60 @@
+server:
+  port: 8085
+  
+spring:
+  application:
+    name: API-GATEWAY  
+  
+
+  
+  
+  
+  cloud:
+    gateway:
+      routes:
+      - id: USER-SERVICE
+        uri: lb://USER-SERVICE
+        predicates:
+        - Path=/users/**
+        
+      - id: HOTEL-SERVICE
+        uri: lb://HOTEL-SERVICE
+        predicates:
+        - Path=/hotels/**
+      
+      - id: RATING-SERVICE
+        uri: lb://RATING-SERVICE
+        predicates:
+        - Path=/ratings/**
+  
+      - id: APPLE-HRM
+        uri: lb://APPLE-HRM
+        predicates:
+        - Path=/**
+  
+  
+eureka:
+  instance:
+    prefer-ip-address: true     
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8084/eureka   
+  
+  
+#      
+#okta:
+#  oauth2:
+#    issuer: https://dev-26748182.okta.com/oauth2/default
+#    audience: api://default      
+#    client-id: 0oaaqs87f60b9STXN5d7 
+#    client-secret: RU742cD47X3OEL5X_hOo8OEHKoASzVQefIemKAGXSjVSwUM7o74QAv7O0CXmcuL5
+#    scopes:
+#    - "${openid}"
+#    - "${profile}"
+#    - "${email}"
+#    - "${offline_access}"
+   
+    
+    

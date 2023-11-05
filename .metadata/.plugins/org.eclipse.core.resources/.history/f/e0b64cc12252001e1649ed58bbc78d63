@@ -1,0 +1,54 @@
+package com.example.producer.myconfig;
+
+import java.net.URI;
+import java.net.URL;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Service;
+
+import com.example.producer.handler.producerhandler;
+import com.launchdarkly.eventsource.ConnectStrategy;
+import com.launchdarkly.eventsource.EventSource;
+import com.launchdarkly.eventsource.StreamException;
+import com.launchdarkly.eventsource.background.BackgroundEventHandler;
+import com.launchdarkly.eventsource.background.BackgroundEventSource;
+
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
+@Service
+public class producerconfig {
+
+	
+	
+	private KafkaTemplate<String, String> kafkaTemplate;
+	
+	
+	
+	
+	
+	public producerconfig(KafkaTemplate<String, String> kafkaTemplate) {
+		super();
+		this.kafkaTemplate = kafkaTemplate;
+	}
+
+
+
+
+
+	public void sendmessage() {
+		System.out.println("hello");
+		
+		BackgroundEventHandler event=new producerhandler(kafkaTemplate,new Common().topi);
+		String url="https://stream.wikimedia.org/v2/stream/recentchange";
+		EventSource.Builder builder=new EventSource.Builder(URI.create(url));
+		BackgroundEventSource bulider=new BackgroundEventSource.Builder(event, builder).threadPriority(Thread.MIN_PRIORITY).build();
+		bulider.start();
+	    System.out.println("byye");
+		
+		
+		
+		}
+	
+	
+}

@@ -1,0 +1,51 @@
+
+
+
+package Com.Searchbox.util;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+
+public class Clientcode {
+
+	
+	
+	
+	
+	
+	public static void main(String[] args) {
+		
+		Akash book = new Akash(1, "Learn Core Java"," with Coding Examples");
+		Akash book1 = new Akash(2, "Learn Hibernate"," with building projects");
+		Transaction transaction = null;
+		try (Session session = HibernateUtil.getsessionFactory().openSession()) {
+			// start a transaction
+			transaction = session.beginTransaction();
+			// save the book objects
+			session.persist(book);
+			session.persist(book1);
+			// commit transaction
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				//transaction.rollback();
+			}
+			e.printStackTrace();
+		}
+
+		try (Session session = HibernateUtil.getsessionFactory().openSession()) {
+			List<Akash> books = session.createQuery("from Akash", Akash.class).list();
+			books.forEach(b -> {
+				System.out.println("Print book name : " + b.getName());
+			});
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}
+	}
+}

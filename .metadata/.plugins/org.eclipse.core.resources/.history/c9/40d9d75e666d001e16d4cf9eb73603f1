@@ -1,0 +1,31 @@
+
+
+
+package Com.Searchbox.util;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+
+public class Clientcode {
+	
+	public static void main(String[] args) {
+		
+		
+		try {
+			Session session=HibernateUtil.getsessionFactory().openSession();
+			Akash a=new Akash();
+			a.setName("Akash");
+			a.setLast("guttedar");
+			session.beginTransaction();
+			session.persist(a);
+			session.getTransaction().commit();
+		}catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		
+			}
+}
